@@ -1,0 +1,115 @@
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+<!--
+:root
+	{}
+html, body
+	{height:100%}
+body
+	{margin:0;
+	font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji"}
+.wrap
+	{max-width:1100px;
+	margin:0 auto;
+	padding:18px}
+.title
+	{font-size:20px;
+	font-weight:700;
+	letter-spacing:0.2px;
+	display:flex;
+	align-items:center}
+.title small
+	{font-weight:500}
+.bar
+	{margin-top:14px;
+	border:1px solid rgba(255,255,255,0.08);
+	border-radius:16px;
+	padding:12px 14px;
+	display:flex;
+	align-items:center;
+	flex-wrap:wrap;
+	box-shadow:0 10px 24px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.04)}
+label
+	{font-size:14px}
+select, button, input[type="number"]
+	{background:#0b1324;
+	border:1px solid rgba(255,255,255,0.12);
+	border-radius:10px;
+	padding:8px 10px;
+	font-size:14px}
+button.primary
+	{border:none;
+	color:white;
+	font-weight:600}
+button.trigger
+	{border:none;
+	color:white;
+	font-weight:600}
+button:disabled
+	{opacity:.6}
+.grid
+	{margin-top:16px;
+	display:grid}
+.card
+	{border:1px solid rgba(255,255,255,0.08);
+	border-radius:16px;
+	padding:10px;
+	box-shadow:0 10px 24px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.04)}
+.meta
+	{margin-top:8px;
+	font-size:12px}
+.footer
+	{margin-top:16px;
+	font-size:12px}
+.warn
+	{color:#fca5a5}
+.trigger-info
+	{color:#22d3ee;
+	font-weight:600}
+-->
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="title">🎤 EEME30001 · Real‑Time Waveform/Spectrum <small>Yuewen Xu · UoB · 2025 TB‑1 · Naim Dahnoun</small>
+</div>
+<div class="bar"><label>Time Window:</label> <select id="windowSel"> <option value="0.001">
+1 ms</option> <option value="0.002">2 ms</option> <option value="0.005">5 ms</option>
+<option value="0.010">10 ms</option> <option value="0.020">20 ms</option> <option value="0.050" selected="">
+50 ms</option> <option value="0.100">100 ms</option> <option value="0.200">200 ms
+</option> <option value="0.500">500 ms</option> <option value="1.0">1 s</option> <option value="2.0">
+2 s</option> <option value="5.0">5 s</option> </select> <label>Y Scale:</label> <select id="yScaleSel">
+<option value="auto" selected="">Auto</option> <option value="0.25">±0.25</option>
+<option value="0.5">±0.5</option> <option value="1">±1</option> <option value="2">
+±2</option> <option value="5">±5</option> </select><button id="btnStart" class="primary">
+Start</button><button id="btnPause" disabled="">Pause</button><button id="btnStop" disabled="">
+Stop</button> <span id="status" class="meta">Not Started</span> </div>
+<div class="bar"><button id="btnTrigger" class="trigger" disabled="">Trigger: OFF
+</button> <label>Mode:</label> <select id="triggerMode" disabled=""> <option value="auto" selected="">
+Auto</option> <option value="rising">Rising Edge</option> <option value="falling">
+Falling Edge</option> </select> <label>Level:</label> <input id="triggerLevel" type="number" value="0" disabled="" style="width:80px">
+<label>Position:</label> <select id="triggerPos" disabled=""> <option value="0.1">
+10%</option> <option value="0.2" selected="">20%</option> <option value="0.3">30%
+</option> <option value="0.5">50%</option> </select> <span id="triggerStatus" class="meta trigger-info">
+</span></div>
+<div class="grid">
+<div class="card">
+<div id="timePlot" style="width:100%; height:360px"></div>
+</div>
+<div class="card">
+<div id="freqPlot" style="width:100%; height:360px"></div>
+</div>
+</div>
+<div class="footer">Note: Runs fully in the browser using <code>Web Audio API</code> for microphone input and Plotly for plotting.<br>
+Microphone access requires an HTTPS environment (e.g., GitHub Pages).<br>
+<strong>Trigger Usage:</strong> Click &quot;Trigger: OFF&quot; to enable. Set Mode (Rising/Falling), adjust Level threshold, and Position (where trigger point appears in window).<br>
+The red line shows the trigger level. Position controls pre-trigger data (e.g., 20% = trigger at 20% of window).<br>
+For measuring PWM via headphone/line cable to a board: use AC coupling and attenuation to protect your audio input.
+</div>
+<div class="meta" id="info"></div>
+</div>
+</body>
+</html>
